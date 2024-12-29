@@ -12,7 +12,28 @@ public class OpenAIController : ControllerBase
     private readonly ChatClient _client;
     private readonly string _connectionString;
 
-    
+    private readonly List<string> ejemplosDePeticiones = new List<string>()
+    {
+        "¿Qué agente tiene más solicitudes registradas?",
+        "Dame una lista de inmuebles disponibles con al menos 3 habitaciones y un precio menor a 200,000.",
+        "¿Cuáles son las solicitudes gestionadas por el agente 'María Gómez'?",
+        "¿Qué agentes no tienen solicitudes asignadas?",
+        "Muestra todos los pisos gestionados por 'Juan Pérez' con sus precios.",
+        "Dame los inmuebles más caros que cada agente tiene asignados.",
+        "¿Cuántas solicitudes de compra se han registrado en la última semana?",
+        "Dame un resumen de todas las casas disponibles, incluyendo el agente asignado.",
+        "¿Qué pisos tienen más de 4 habitaciones y están disponibles?",
+        "¿Qué agente tiene casas con vistas al mar?",
+        "Dame el correo y número de teléfono del agente que gestiona el piso ubicado en 'Calle Mayor 123, Madrid'.",
+        "¿Cuáles son las casas disponibles para alquiler con más de 2 habitaciones?",
+        "¿Qué inmuebles tienen más de 150 metros cuadrados y están asignados al agente 'Ana Martín'?",
+        "¿Qué agente tiene más inmuebles asignados?",
+        "¿Cuáles son las solicitudes relacionadas con casas en la playa?",
+        "Dame un resumen de los pisos gestionados por 'Carlos López' ordenados por precio de mayor a menor."
+    };
+
+
+
     public OpenAIController(ChatClient chatClient, IConfiguration config)
     {
         _client = chatClient;
