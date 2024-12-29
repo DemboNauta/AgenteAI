@@ -13,24 +13,26 @@ public class OpenAIController : ControllerBase
     private readonly string _connectionString;
 
     private readonly List<string> ejemplosDePeticiones = new List<string>()
-    {
-        "¿Qué agente tiene más solicitudes registradas?",
-        "Dame una lista de inmuebles disponibles con al menos 3 habitaciones y un precio menor a 200,000.",
-        "¿Cuáles son las solicitudes gestionadas por el agente 'María Gómez'?",
-        "¿Qué agentes no tienen solicitudes asignadas?",
-        "Muestra todos los pisos gestionados por 'Juan Pérez' con sus precios.",
-        "Dame los inmuebles más caros que cada agente tiene asignados.",
-        "¿Cuántas solicitudes de compra se han registrado en la última semana?",
-        "Dame un resumen de todas las casas disponibles, incluyendo el agente asignado.",
-        "¿Qué pisos tienen más de 4 habitaciones y están disponibles?",
+{
+        "¿Qué agente tiene más solicitudes? Quiero saber quién es y cómo contactarlo.",
+        "Enséñame los pisos disponibles con al menos 3 habitaciones que cuesten menos de 200,000 euros.",
+        "¿Qué solicitudes ha gestionado María Gómez?",
+        "¿Hay algún agente que no tenga solicitudes? Quiero saber quién es.",
+        "Muéstrame las casas que tiene Juan Pérez, con los precios y características.",
+        "¿Cuáles son los inmuebles más caros que gestiona cada agente?",
+        "¿Cuántas solicitudes de compra se han hecho esta semana?",
+        "Quiero ver todas las casas disponibles y qué agente las gestiona.",
+        "¿Qué pisos grandes están disponibles? Necesito uno con al menos 4 habitaciones.",
         "¿Qué agente tiene casas con vistas al mar?",
-        "Dame el correo y número de teléfono del agente que gestiona el piso ubicado en 'Calle Mayor 123, Madrid'.",
-        "¿Cuáles son las casas disponibles para alquiler con más de 2 habitaciones?",
-        "¿Qué inmuebles tienen más de 150 metros cuadrados y están asignados al agente 'Ana Martín'?",
-        "¿Qué agente tiene más inmuebles asignados?",
-        "¿Cuáles son las solicitudes relacionadas con casas en la playa?",
-        "Dame un resumen de los pisos gestionados por 'Carlos López' ordenados por precio de mayor a menor."
+        "¿Quién gestiona el piso de la Calle Mayor 123, Madrid? Quiero su contacto.",
+        "Estoy buscando casas para alquilar con al menos 2 habitaciones. ¿Qué tienes?",
+        "Quiero un piso grande, más de 150 metros cuadrados, gestionado por Ana Martín. ¿Hay algo?",
+        "¿Qué agente tiene más pisos asignados?",
+        "¿Qué solicitudes están relacionadas con casas en la playa?",
+        "Muéstrame los pisos que tiene Carlos López ordenados por precio, del más caro al más barato.",
+        "Me gusta mucho la playa, que pisos hay que puedan tener playa cerca?"
     };
+
 
 
 
@@ -68,7 +70,7 @@ public class OpenAIController : ControllerBase
         var databaseContext = GetDatabaseContext();
         var messages = new List<ChatMessage>
             {
-                new SystemChatMessage($"Eres un asistente experto en SQLserver ten en cuenta que estamos usando sqlserver para no hacer consultas incompatibles. Aquí está la estructura de la base de datos:\n{databaseContext}\nGenera una consulta SQL válida basandota en la estructura, es extremadmente importante que respondas solo con el texto de la consulta, ni una palabra más."),
+                new SystemChatMessage($"Eres un asistente experto en SQLserver ten en cuenta que estamos usando sqlserver para no hacer consultas incompatibles. Aquí está la estructura de la base de datos:\n{databaseContext}\nGenera una consulta SQL válida basandote en la estructura, es extremadmente importante que respondas solo con el texto de la consulta, ni una palabra más. Además ciñete a la estructura de las tablas, no puedes inventarte columnas, campos o tablas, además si te piden cosas concretas como descripciones o similares trata de usar like para abordar mejor"),
                 new UserChatMessage(userQuery)
             };
 
@@ -158,11 +160,10 @@ public class OpenAIController : ControllerBase
         ));
 
         var chatMessages = new List<ChatMessage>
-    {
-        new SystemChatMessage("Eres un asistente que convierte datos SQL en respuestas en lenguaje natural de el CRM inmobiliario Mobilia. Es importante que no hables sobre sql como tal, ya que vas a responder a los usuarios, te vamos a pasar los datos, tu solo tienes que pasarlo a lenguaje natrual"),
-        new UserChatMessage(userQuery),
-        new AssistantChatMessage($"Aquí tienes los primeros {maxResults} resultados:\n{resultSummary}")
-    };
+        {
+            new SystemChatMessage($"Eres un asistente que convierte datos SQL en respuestas en lenguaje natural de el CRM inmobiliario Mobilia. Es importante que no hables sobre sql como tal, ya que vas a responder a los usuarios, te vamos a pasar los datos, tu solo tienes que pasarlo a lenguaje natrual, esta es la repsuesta que hemos obtenido de la base de datos: Resultados de la consulta:\\n{resultSummary}\""),
+            new UserChatMessage(userQuery),
+        };
 
         ChatCompletion response = await _client.CompleteChatAsync(chatMessages);
 
