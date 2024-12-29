@@ -58,7 +58,6 @@ public class OpenAIController : ControllerBase
             throw new Exception("No se pudo generar una consulta SQL válida.");
         }
 
-        // Retornar el primer texto generado
         return completion.Content[0].Text.Trim();
     }
 
