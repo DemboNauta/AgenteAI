@@ -6,40 +6,6 @@ using OpenAI.Chat;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets<Program>();
 
-// Obtener la clave de API y el modelo desde User Secrets
-var apiKey = builder.Configuration["OpenAI:ApiKey"];
-var model = builder.Configuration["OpenAI:Model"]; // Modelo configurado en User Secrets
-
-if (string.IsNullOrEmpty(apiKey))
-{
-    throw new Exception("No se encontró la clave de OpenAI en los User Secrets.");
-}
-
-if (string.IsNullOrEmpty(model))
-{
-    model = "gpt-3.5-turbo"; // Modelo por defecto si no está configurado
-}
-
-// Registrar ChatClient directamente
-builder.Services.AddSingleton<ChatClient>(sp =>
-{
-    var configuration = sp.GetRequiredService<IConfiguration>();
-    var apiKey = configuration["OpenAI:ApiKey"];
-    var model = configuration["OpenAI:Model"];
-
-    if (string.IsNullOrEmpty(apiKey))
-    {
-        throw new Exception("No se encontró la clave de OpenAI en los User Secrets.");
-    }
-
-    if (string.IsNullOrEmpty(model))
-    {
-        model = "gpt-3.5-turbo"; // Modelo por defecto
-    }
-
-    return new ChatClient(model, apiKey); // Instancia explícita de ChatClient
-});
-
 builder.Services.AddSingleton<ChatClient>(sp =>
 {
     var configuration = sp.GetRequiredService<IConfiguration>();
