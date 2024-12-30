@@ -1,10 +1,10 @@
 # AgenteAI
 
-AgenteAI es un proyecto que utiliza una base de datos vectorial (Chroma), embeddings generados con Sentence Transformers y ChatGPT para realizar búsquedas semánticas y generar respuestas en lenguaje natural.
+AgenteAI es un proyecto que utiliza una base de datos vectorial (Chroma), embeddings generados con Sentence Transformers y ChatGPT para realizar bÃºsquedas semÃ¡nticas y generar respuestas en lenguaje natural.
 
-## Características
+## CaracterÃ­sticas
 
-- **Embeddings Multilingües**: Usa Sentence Transformers para generar representaciones vectoriales de textos.
+- **Embeddings MultilingÃ¼es**: Usa Sentence Transformers para generar representaciones vectoriales de textos.
 - **Base de Datos Vectorial**: Utiliza Chroma para almacenar y consultar embeddings con filtros basados en metadatos.
 - **ChatGPT**: Integra el modelo GPT-4 para generar respuestas detalladas en lenguaje natural.
 
@@ -13,7 +13,7 @@ AgenteAI es un proyecto que utiliza una base de datos vectorial (Chroma), embedd
 - Python 3.9 o 3.10
 - Clave API de OpenAI (puedes obtenerla en [OpenAI API](https://platform.openai.com/account/api-keys))
 
-## Instalación
+## InstalaciÃ³n
 
 1. **Clona el Repositorio**:
    ```bash
@@ -37,5 +37,6 @@ $env:OPENAI_API_KEY="tu-clave-api"
 ## Ejecutar
 python main.py
 
-_
+Ejemplo de respuesta
+![image](https://github.com/user-attachments/assets/4214ada4-2ea4-4928-a288-b4b15e35d759)
 
