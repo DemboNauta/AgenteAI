@@ -5,7 +5,7 @@ from chatgpt.response_formatter import ChatGPTFormatter
 # Inicialización
 generator = EmbeddingGenerator()
 db = ChromaDatabase()
-formatter = ChatGPTFormatter()
+chatGPTformatter = ChatGPTFormatter()
 
 # Paso 1: Generar embeddings para documentos más complejos
 documents = [
@@ -78,7 +78,7 @@ results = db.query_similar(query_text=query, n_results=2)
 retrieved_texts = results["documents"]
 
 # Paso 3: Formatear respuesta con ChatGPT
-response = formatter.format_response(retrieved_texts, query)
+response = chatGPTformatter.format_response(retrieved_texts, query)
 print("\n---Respuesta sobre la consulta:---")
 print(response)
 
