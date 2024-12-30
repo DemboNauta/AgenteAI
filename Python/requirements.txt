@@ -1,3 +1,4 @@
+chromadb
 sentence-transformers
-gamma-client
 openai
+torch
