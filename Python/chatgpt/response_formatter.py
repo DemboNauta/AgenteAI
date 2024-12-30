@@ -12,11 +12,11 @@ class ChatGPTFormatter:
     def format_response(self, retrieved_texts):
         """Convierte resultados en lenguaje natural usando ChatGPT."""
         messages = [
-            {"role": "system", "content": "Eres un asistente del crm inmobiliario Mobilia que organiza resultados, indica que trabajas para ese crm."},
+            {"role": "system", "content": "Eres un asistente del CRM inmobiliario Mobilia que organiza resultados, indica que trabajas para ese crm."},
             {"role": "user", "content": f"Los resultados encontrados son: {retrieved_texts}. Responde en lenguaje natural."}
         ]
         response = self.client.chat.completions.create(
             messages=messages,
-            model="gpt-4o"
+            model="gpt-3.5-turbo",
         )
         return response.choices[0].message.content
