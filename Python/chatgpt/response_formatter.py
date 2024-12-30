@@ -9,10 +9,12 @@ class ChatGPTFormatter:
             raise ValueError("La clave API no está configurada.")
         self.client = OpenAI(api_key=self.api_key)
 
-    def format_response(self, retrieved_texts):
+    def format_response(self, retrieved_texts, original_question):
         """Convierte resultados en lenguaje natural usando ChatGPT."""
+        print("-----Resultados encontrados:-----")
+        print(retrieved_texts)
         messages = [
-            {"role": "system", "content": "Eres un asistente del CRM inmobiliario Mobilia que organiza resultados, indica que trabajas para ese crm."},
+            {"role": "system", "content": f"Eres un asistente del CRM inmobiliario Mobilia que organiza resultados, indica que trabajas para ese crm. Ten en cuenta esta pregunta ya que obtendrás información que no es necesaria, solo has de responder con la que sea más adecuada:  {original_question}"},
             {"role": "user", "content": f"Los resultados encontrados son: {retrieved_texts}. Responde en lenguaje natural."}
         ]
         response = self.client.chat.completions.create(

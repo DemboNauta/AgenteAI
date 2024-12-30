@@ -69,6 +69,7 @@ for i, doc in enumerate(documents):
 
 # Paso 2: Realizar una consulta sobre Mobilia
 query = "¿Cómo puedo añadir un inmueble en Mobilia?"
+print(f"\n---Consulta sobre Mobilia: {query}---")
 query_embedding = generator.generate_embeddings([query])[0]
 
 # Realizar una búsqueda híbrida (texto + metadatos)
@@ -77,8 +78,8 @@ results = db.query_similar(query_text=query, n_results=2)
 retrieved_texts = results["documents"]
 
 # Paso 3: Formatear respuesta con ChatGPT
-response = formatter.format_response(retrieved_texts)
-print("Respuesta sobre la consulta:")
+response = formatter.format_response(retrieved_texts, query)
+print("\n---Respuesta sobre la consulta:---")
 print(response)
 
 # Paso 4: Realizar una consulta específica por categoría
