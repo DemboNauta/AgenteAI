@@ -39,8 +39,7 @@ python main.py
 
 ## Ejemplos de respuesta al pedirle información sobre como añadir un inmueble:
 
-![image](https://github.com/user-attachments/assets/4214ada4-2ea4-4928-a288-b4b15e35d759)
+![image](https://github.com/user-attachments/assets/fe62451e-aa0d-417d-8fdf-0267bfe14519)
 
-![image](https://github.com/user-attachments/assets/6f5f3a0f-164a-420f-a79d-20e84b01195f)
 
 
