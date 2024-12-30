@@ -361,3 +361,20 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+
+# Ignorar el entorno virtual
+venv/
+
+# Ignorar caché de Python
+__pycache__/
+*.pyc
+
+# Ignorar configuraciones locales
+.env
+*.env
+
+# Ignorar otros archivos temporales
+.DS_Store
+*.log
+*.sqlite3

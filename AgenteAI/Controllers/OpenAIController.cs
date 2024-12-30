@@ -33,9 +33,6 @@ public class OpenAIController : ControllerBase
         "Me gusta mucho la playa, que pisos hay que puedan tener playa cerca?"
     };
 
-
-
-
     public OpenAIController(ChatClient chatClient, IConfiguration config)
     {
         _client = chatClient;
@@ -60,13 +57,18 @@ public class OpenAIController : ControllerBase
 
             return Ok(new { respuesta = response });
         }
+        catch (SqlException ex)
+        {
+            return Ok(new { mensaje = "Uy, parece que tuvimos un problema al realizar la consulta. Por favor, inténtalo de nuevo o verifica tu solicitud." });
+        }
         catch (Exception ex)
         {
-            return StatusCode(500, $"Error: {ex.Message}");
+            return Ok(new { mensaje = "Uy, ocurrió un problema inesperado. Intenta nuevamente más tarde." });
         }
     }
 
-    private async Task<string> GenerateSqlQueryAsync(string userQuery){
+    private async Task<string> GenerateSqlQueryAsync(string userQuery)
+    {
         var databaseContext = GetDatabaseContext();
         var messages = new List<ChatMessage>
             {
@@ -84,34 +86,39 @@ public class OpenAIController : ControllerBase
         return completion.Content[0].Text.Trim();
     }
 
-
     private async Task<List<Dictionary<string, object>>> ExecuteSqlQueryAsync(string sqlQuery)
     {
         var results = new List<Dictionary<string, object>>();
 
-        using (var connection = new SqlConnection(_connectionString))
+        try
         {
-            await connection.OpenAsync();
-            using (var command = new SqlCommand(sqlQuery, connection))
+            using (var connection = new SqlConnection(_connectionString))
             {
-                using (var reader = await command.ExecuteReaderAsync())
+                await connection.OpenAsync();
+                using (var command = new SqlCommand(sqlQuery, connection))
                 {
-                    while (await reader.ReadAsync())
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        var row = new Dictionary<string, object>();
-                        for (int i = 0; i < reader.FieldCount; i++)
+                        while (await reader.ReadAsync())
                         {
-                            row[reader.GetName(i)] = reader.GetValue(i);
+                            var row = new Dictionary<string, object>();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                row[reader.GetName(i)] = reader.GetValue(i);
+                            }
+                            results.Add(row);
                         }
-                        results.Add(row);
                     }
                 }
             }
         }
+        catch (Exception)
+        {
+            throw new Exception("Error al ejecutar la consulta");
+        }
 
         return results;
     }
-
 
     private string GetDatabaseContext()
     {
@@ -149,7 +156,6 @@ public class OpenAIController : ControllerBase
         ";
     }
 
-
     private async Task<string> GenerateNaturalResponseAsync(string userQuery, List<Dictionary<string, object>> queryResults)
     {
         const int maxResults = 5; // Limitar la cantidad de resultados
@@ -174,5 +180,4 @@ public class OpenAIController : ControllerBase
 
         return response.Content[0].Text.Trim();
     }
-
 }
