@@ -37,6 +37,11 @@ $env:OPENAI_API_KEY="tu-clave-api"
 ## Ejecutar
 python main.py
 
+## Resumen de comandos
+
+![image](https://github.com/user-attachments/assets/9b62a367-1bb9-4ea6-abdd-4646cd1605f1)
+
+
 ## Ejemplos de respuesta al pedirle información sobre como añadir un inmueble:
 
 ![image](https://github.com/user-attachments/assets/fe62451e-aa0d-417d-8fdf-0267bfe14519)
